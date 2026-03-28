@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>как провести — Досуг по городам России</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Onest:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- PAGE 0: HERO -->
+<div class="page active" id="p0">
+  <div class="hero-inner">
+    <div class="hero-bg"></div>
+    <h1>Найди что<br>купить в<br>своём<br>городе</h1>
+    <p class="hero-sub">Выбери район — мы предложим лучшие места для покупок рядом с тобой</p>
+    <button class="btn-primary" onclick="goTo(1)">Выбрать город →</button>
+    <div class="hero-support">
+      <span class="hero-support-text">Что-то непонятно?</span>
+      <a href="https://t.me/garanteerasd" target="_blank" class="hero-support-link">✈ Пишите @garanteerasd</a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 1: ГОРОДА -->
+<div class="page" id="p1">
+  <div class="topbar">
+    <button class="back-btn" onclick="goTo(0)">← Назад</button>
+    <span class="topbar-title">Шаг 1 <span class="topbar-sep">/</span> <span class="topbar-cur">Выбери город</span></span>
+  </div>
+  <div class="page-body">
+    <p class="sec-label">Города России</p>
+    <h2 class="sec-title">Выбери город</h2>
+    <div class="cities-grid" id="cityGrid"></div>
+  </div>
+</div>
+
+<!-- PAGE 2: РАЙОН -->
+<div class="page" id="p2">
+  <div class="topbar">
+    <button class="back-btn" onclick="goTo(1)">← Назад</button>
+    <span class="topbar-title" id="p2-bar">Шаг 2 <span class="topbar-sep">/</span> <span class="topbar-cur">Район</span></span>
+  </div>
+  <div class="page-body">
+    <p class="sec-label">Шаг 2</p>
+    <h2 class="sec-title" id="p2-title">Выбери район</h2>
+    <div class="tab-row" id="tabRow"></div>
+    <div id="tabContent"></div>
+  </div>
+</div>
+
+<!-- PAGE 3: МЕСТА -->
+<div class="page" id="p3">
+  <div class="topbar">
+    <button class="back-btn" onclick="goTo(2)">← Назад</button>
+    <span class="topbar-title" id="p3-bar">Шаг 3 <span class="topbar-sep">/</span> <span class="topbar-cur">Досуг</span></span>
+  </div>
+  <div class="page-body">
+    <p class="sec-label">Шаг 3</p>
+    <h2 class="sec-title">Выбери тип досуга</h2>
+    <div class="taxi-notice" id="taxiNotice">
+      <span class="taxi-notice-icon">🚕</span>
+      <span>При выборе такси к сумме добавляется <b>+300 ₽</b> за заказ — мы лично везём вас по красивым местам города!</span>
+    </div>
+    <div class="places-grid" id="placesGrid"></div>
+    <div class="faq-section">
+      <div class="faq-title">Частые вопросы</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>❓ Как это всё происходит?</span><span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a">Всё очень просто: <strong>выбираешь город → район → тип досуга → оплачиваешь</strong>. После оплаты ты пишешь нам в Telegram — <a href="https://t.me/garanteerasd" target="_blank">@garanteerasd</a> — и в течение <strong>15 минут</strong> мы присылаем координаты и фото.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>🚕 Что такое «Такси»?</span><span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a">Раздел <strong>«Такси»</strong> — пишете нам в Telegram вашу ближайшую улицу и мы приезжаем и кладём клад в 500 метрах от указанного адреса.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>💬 Что делать, если что-то непонятно?</span><span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a">Напишите нам в Telegram: <a href="https://t.me/garanteerasd" target="_blank">@garanteerasd</a>. Отвечаем быстро!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4: ОПЛАТА -->
+<div class="page" id="p4">
+  <div class="topbar">
+    <button class="back-btn" onclick="goTo(3)">← Назад</button>
+    <span class="topbar-title">Шаг 4 <span class="topbar-sep">/</span> <span class="topbar-cur">Оплата</span></span>
+  </div>
+  <div class="pay-wrap">
+    <div class="pay-title">Оплата</div>
+    <div class="pay-subtitle" id="paySubtitle"></div>
+    <div class="pay-label">Перевод на карту (RUB)</div>
+    <div class="card-box">
+      <div class="card-number" id="cardDisplay">2204 3210 4435 6046</div>
+      <button class="btn-copy" id="copyBtn" onclick="copyCard()">Копировать</button>
+    </div>
+    <div class="copy-hint">Нажмите, чтобы скопировать</div>
+    <hr class="pay-divider">
+    <div class="pay-amount-label">Сумма к оплате</div>
+    <div class="pay-amount" id="payAmount"></div>
+    <div class="receipt-label">Прикрепите чек об оплате</div>
+    <div class="receipt-drop" id="receiptDrop" onclick="document.getElementById('receiptInput').click()">
+      <div class="receipt-drop-icon">📎</div>
+      <div class="receipt-drop-text">Нажмите, чтобы прикрепить чек</div>
+      <div class="receipt-drop-sub">JPG, PNG или PDF · до 10 МБ</div>
+      <input type="file" id="receiptInput" accept="image/*,application/pdf" style="display:none" onchange="handleReceipt(this)">
+    </div>
+    <div class="receipt-preview" id="receiptPreview" style="display:none">
+      <div class="receipt-preview-inner">
+        <span class="receipt-ok">✓</span>
+        <span class="receipt-fname" id="receiptFname"></span>
+        <button class="receipt-remove" onclick="removeReceipt(event)">✕</button>
+      </div>
+    </div>
+    <div class="receipt-error" id="receiptError" style="display:none">⚠ Пожалуйста, прикрепите чек перед подтверждением</div>
+    <button class="btn-confirm locked" id="btnConfirm" onclick="confirmPayment()">ПОДТВЕРДИТЬ ОПЛАТУ ✓</button>
+    <div class="pay-after-text">
+      После оплаты напишите нам в Telegram —<br>
+      ответим в течение <strong style="color:var(--c-text)">15 минут</strong><br><br>
+      <a href="https://t.me/garanteerasd" target="_blank">✈ @garanteerasd</a>
+    </div>
+    <div class="support-bar">
+      <span>Поддержка:</span>
+      <a href="https://t.me/garanteerasd" target="_blank" class="support-link">✈ @garanteerasd</a>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 5: УСПЕХ -->
+<div class="page" id="p5">
+  <div class="topbar" style="justify-content:center">
+    <span class="topbar-title" style="color:var(--c-green)">✓ Готово!</span>
+  </div>
+  <div class="success-inner">
+    <div class="success-icon">✓</div>
+    <h2>Приятного отдыха!</h2>
+    <p>Оплата подтверждена. Напишите нам в Telegram — ответим в течение 15 минут 🎉</p>
+    <a href="https://t.me/garanteerasd" target="_blank" class="support-link" style="margin-bottom:24px;font-size:14px;padding:10px 22px">✈ @garanteerasd</a>
+    <br><br>
+    <button class="btn-restart" onclick="restart()">Выбрать ещё раз</button>
+  </div>
+</div>
+
+<div class="global-support">
+  <span>Поддержка:</span>
+  <a href="https://t.me/garanteerasd" target="_blank">✈ @garanteerasd</a>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
