@@ -46,20 +46,6 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const ALLOWED = process.env.ALLOWED_ORIGIN || '';
-  const origin  = event.headers['origin']  || '';
-  const referer = event.headers['referer'] || '';
-  const ok = !ALLOWED
-    || origin.includes(ALLOWED)
-    || referer.includes(ALLOWED)
-    || origin.includes('localhost')
-    || referer.includes('localhost');
-
-  if (!ok) {
-    console.warn('Blocked request from:', origin || referer);
-    return { statusCode: 403, body: 'Forbidden' };
-  }
-
   const ip =
     event.headers['x-nf-client-connection-ip'] ||
     event.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
