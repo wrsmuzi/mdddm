@@ -71,13 +71,15 @@ exports.handler = async (event) => {
       const { text } = JSON.parse(event.body);
       if (!text) return { statusCode: 400, body: 'Missing text' };
 
+      console.log('TOKEN prefix:', TGT.substring(0, 10));
+      console.log('CHAT_ID:', TGC);
       const res  = await fetch(`https://api.telegram.org/bot${TGT}/sendMessage`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ chat_id: TGC, text, parse_mode: 'HTML' }),
       });
       const data = await res.json();
-      console.log('sendMessage:', data.ok, data.description || '');
+      console.log('sendMessage full:', JSON.stringify(data));
       return { statusCode: 200, body: JSON.stringify(data) };
     }
 
